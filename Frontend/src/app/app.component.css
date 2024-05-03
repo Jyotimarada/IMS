@@ -1,0 +1,38 @@
+
+mat-divider {
+  margin: 2px 0px;
+  background-color: #fff;
+}
+
+.mat-sidenav-container {
+  height: calc(100vh - 65px);
+}
+mat-sidenav {
+  width: 280px;
+  border-right: none;
+  text-align: center;
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+  margin: 10px 0;
+  mat-icon {
+      margin-right: 8px;
+  }
+}
+.activebutton
+{
+  background-color:#9f88c6;
+  color: white;
+}
+
+.app-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}

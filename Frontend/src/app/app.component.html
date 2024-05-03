@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <button
+    mat-button
+    aria-label="icon-button with menu icon"
+    class="example-icon"
+  >
+  <mat-icon (click)="sideNavToggle('menu')"  *ngIf="!sideNav?.opened">menu</mat-icon>
+  <mat-icon (click)="sideNavToggle('close')" *ngIf="sideNav?.opened">close</mat-icon>
+  </button>
+  <span>Inventory Management System</span>
+</mat-toolbar>
+<mat-sidenav-container class="mat-sidenav-container">
+  <mat-sidenav #sideNav="matSidenav">
+    <button mat-button class="menu-button" (click)="action('employee')"  routerLink="/employees" routerLinkActive="activebutton">
+      <mat-icon>badge</mat-icon>
+      <span>Employees</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-button class="menu-button" (click)="action('device')" routerLink="/devices" routerLinkActive="activebutton">
+      <mat-icon>devices</mat-icon>
+      <span>Devices</span>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

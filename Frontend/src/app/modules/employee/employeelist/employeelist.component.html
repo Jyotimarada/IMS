@@ -1,0 +1,67 @@
+<mat-toolbar class="tool-bar">
+  <mat-toolbar-row>
+  <span>Employee List</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button matTooltip="Add new employee"  routerLink="0">
+    <mat-icon aria-label="Add Employee"  matTooltip="Add new employee">add_circle_outline</mat-icon>
+  </button>
+</mat-toolbar-row>
+</mat-toolbar>
+<div class="search-box">
+
+  <mat-form-field class="Search-full-width">
+  <mat-label>Search employee</mat-label>
+  <input type="text" matInput  placeholder="Search employee" name= "search" [(ngModel)]= "search"  (keyup.enter)="OnSearch();" />
+  @if (search) {
+    <button matSuffix mat-button (click)="OnClear();"><mat-icon >close</mat-icon></button>
+
+  }
+  @if (search) {
+    <button matSuffix mat-button (click)="OnSearch();" ><mat-icon >search</mat-icon></button>
+
+  }
+  </mat-form-field>
+
+  </div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.lastName + ', ' +  element.firstName }} </span>
+        <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" routerLink="{{element.id}}">
+        <mat-icon>edit</mat-icon>
+     </button></td>
+    </ng-container>
+
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="devices">
+      <th mat-header-cell *matHeaderCellDef> Devices Assigned </th>
+      <td mat-cell *matCellDef="let element"> <a href="__target" src=""> {{element.devices}} </a> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

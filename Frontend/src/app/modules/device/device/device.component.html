@@ -1,0 +1,80 @@
+<mat-toolbar class="tool-bar">
+  <mat-toolbar-row>
+    <button mat-icon-button matTooltip="Device List" routerLink="../">
+      <mat-icon aria-label="Device List"  matTooltip="Device List">arrow_back</mat-icon>
+    </button>
+  <span>{{this.Title}}</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button matTooltip="Save Device" type="submit" form="deviceForm">
+    <mat-icon aria-label="Save Device"  matTooltip="Save Device">save</mat-icon>
+  </button>
+</mat-toolbar-row>
+</mat-toolbar>
+<div class="form-group">
+<form [formGroup]="deviceForm" (ngSubmit)="submit();" id="deviceForm" class="device-form">
+  <mat-form-field >
+    <mat-label>Device Id</mat-label>
+    <input matInput
+           placeholder="Id"
+           [formControl]="deviceForm.controls.id"
+           >
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Enter device name</mat-label>
+    <input matInput
+           placeholder="Enter device name"
+           [formControl]="deviceForm.controls.name"
+           required>
+    @if (deviceForm.controls.name.invalid) {
+      <mat-error>Please enter a valid device name.</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Enter device type</mat-label>
+    <input #input
+           type="text"
+           placeholder="Pick one"
+           matInput
+           [formControl]="deviceForm.controls.type"
+           [matAutocomplete]="auto"
+           (input)="filter()"
+           (focus)="filter()"
+           required>
+    <mat-autocomplete requireSelection #auto="matAutocomplete">
+      @for (option of filteredOptions; track option) {
+        <mat-option [value]="option">{{option}}</mat-option>
+      }
+    </mat-autocomplete>
+    @if (deviceForm.controls.type.invalid) {
+      <mat-error>Please select a valid device type.</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Enter device barcode</mat-label>
+    <input matInput
+           placeholder="xxxxxxxxxxx"
+           [formControl]="deviceForm.controls.barcode"
+           required>
+    @if (deviceForm.controls.barcode.invalid) {
+      <mat-error>Please enter a valid device barcode</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Enter device description</mat-label>
+    <input matInput
+           placeholder="device description"
+           [formControl]="deviceForm.controls.description">
+    @if (deviceForm.controls.description.invalid) {
+      <mat-error>Please enter a valid description.</mat-error>
+    }
+  </mat-form-field>
+
+
+
+  <mat-checkbox [formControl]="deviceForm.controls.shared">Is a shared device?</mat-checkbox>
+
+</form>
+</div>
