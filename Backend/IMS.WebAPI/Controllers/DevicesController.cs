@@ -20,10 +20,10 @@ namespace IMS.WebAPI.Controllers
         private readonly ILogger<DevicesController> _logger;
 
         /// <summary>
-        /// 
+        /// DevicesController
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="context"></param>
+        /// <param name="logger">logger</param>
+        /// <param name="deviceService">device service</param>
         public DevicesController(ILogger<DevicesController> logger, DeviceService deviceService)
         {
             _logger = logger;
@@ -31,9 +31,10 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get Devices which contains the search string
         /// </summary>
-        /// <returns></returns>
+        /// <param name="s">search string</param>
+        /// <returns>Devices matching the search string</returns>
         [HttpGet]
         public async Task<IEnumerable<DeviceDTO>> GetDevices([FromQuery] string? s,CancellationToken cancellationToken)
         {
@@ -42,10 +43,10 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get device by id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id"> Id of the device</param>
+        /// <returns>Device matching the id</returns>
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<Device>> GetDevice([FromRoute]  int id, CancellationToken cancellationToken)
@@ -55,10 +56,10 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add device
         /// </summary>
-        /// <param name="device"></param>
-        /// <returns></returns>
+        /// <param name="device">Device DeviceDTO object for adding</param>
+        /// <returns>Result of the add operation</returns>
         [HttpPost]
         public async Task<IActionResult> AddDevice([FromBody] DeviceDTO device, CancellationToken cancellationToken)
         {
@@ -68,10 +69,10 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Update device with id
         /// </summary>
-        /// <param name="device"></param>
-        /// <returns></returns>
+        /// <param name="id">Device id to be updated</param>
+        /// <returns>Result of the update operation</returns>
         [HttpPatch]
         [Route("{id:int}")]
         public async Task<IActionResult> UpdateDevice([FromRoute] int id, [FromBody] DeviceDTO device, CancellationToken cancellationToken)

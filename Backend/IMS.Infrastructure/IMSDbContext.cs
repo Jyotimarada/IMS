@@ -38,6 +38,9 @@ namespace IMS.Infrastructure.Entities
                 .ToTable("Device")
                 .Property(p => p.DateCreated).HasDefaultValue(DateTimeOffset.UtcNow);
 
+            modelBuilder.Entity<EmployeeDevice>()
+                 .ToTable("EmployeeDevice");
+
 
             modelBuilder.Entity<Employee>().HasData(
                 new Employee { Id = 1, FirstName = "Frodo", LastName = "Baggins", Email = "frodo.baggins@lotr.dev" },

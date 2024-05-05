@@ -15,12 +15,10 @@ namespace IMS.WebAPI.Controllers
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
-
         private readonly EmployeeService _employeeService;
        
-
         /// <summary>
-        /// 
+        /// Employees Controller Constructor
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="context"></param>
@@ -30,15 +28,21 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all employees that matches the search string
         /// </summary>
-        /// <returns></returns>
+        /// <param name="s">Search string</param>
+        /// <returns>Employees that matches s </returns>
         [HttpGet]
         public async Task<IEnumerable<EmployeeDTO>> GetEmployees([FromQuery] string? s, CancellationToken cancellationToken)
         {
             return _employeeService.SearchByName(s,cancellationToken);
         }
 
+        /// <summary>
+        /// Get employee by id
+        /// </summary>
+        /// <param name="id">Id of the employee</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id:int}")]
         public async Task<EmployeeDTO> GetEmployeeById([FromRoute] int id, CancellationToken cancellationToken)
@@ -47,10 +51,10 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add employee
         /// </summary>
-        /// <param name="employee"></param>
-        /// <returns></returns>
+        /// <param name="employee">Employee details to be added</param>
+        /// <returns>response of the operation</returns>
         [HttpPost]
         public async Task<ActionResult> AddEmployee([FromBody] EmployeeDTO employee, CancellationToken cancellationToken)
         {
@@ -59,6 +63,13 @@ namespace IMS.WebAPI.Controllers
             return Ok(new { Message = "Employee created!" });
         }
 
+
+        /// <summary>
+        /// Update employee information
+        /// </summary>
+        /// <param name="id">Id of the employee</param>
+        /// <param name="employee">Employee details</param>
+        /// <returns>Status of the operation</returns>
         [HttpPatch]
         [Route("{id:int}")]
         public async Task<ActionResult> UpdateEmployee([FromRoute] int id, [FromBody] EmployeeDTO employee, CancellationToken cancellationToken)
@@ -70,11 +81,11 @@ namespace IMS.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Assign devices to employee
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="devices"></param>
-        /// <returns></returns>
+        /// <param name="id">Id of the employee</param>
+        /// <param name="devices">Devices to be assigned</param>
+        /// <returns>Status of the operation</returns>
         [HttpPost]
         [Route("{id:int}/assign-devices")]
         public async Task<IActionResult> AssignDevice([FromRoute] int id, [FromBody] EmployeeDeviceDTO[] employeeDevies, CancellationToken cancellationToken)
@@ -85,17 +96,15 @@ namespace IMS.WebAPI.Controllers
 
 
         /// <summary>
-        /// 
+        /// Get employee devices by employee id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">id of the employee</param>
         /// <returns></returns>
         [HttpGet]
         [Route("{id:int}/devices")]
         public async Task<IEnumerable<EmployeeDeviceDTO>> GetEmployeeDevices([FromRoute] int id)
         {
             return await _employeeService.GetEmployeeDevices(id);
-            //return await _repository.GetEmployeeDevices(id);
-
 
         }
 
