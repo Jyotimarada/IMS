@@ -23,6 +23,10 @@ namespace IMS.Application.Services
 
         public async Task AddEmployee(EmployeeDTO employee, CancellationToken cancellationToken)
         {
+            if (employee == null)
+            {
+                throw new ArgumentNullException(nameof(employee));
+            }
             await _repository.Create(_mapper.Map<Employee>(employee));
             await _unitOfWork.Save(cancellationToken);
         }
