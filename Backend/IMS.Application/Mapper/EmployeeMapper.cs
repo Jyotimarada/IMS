@@ -10,9 +10,16 @@ using System.Threading.Tasks;
 
 namespace IMS.Application.Mapper
 {
+    /// <summary>
+    /// EmployeeMapper class.
+    /// </summary>
     public sealed class EmployeeMapper : Profile
     {
-       public EmployeeMapper() 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmployeeMapper"/> class.
+        /// </summary>
+        public EmployeeMapper()
         {
             CreateMap<EmployeeDTO, Employee>();
             CreateMap<Employee, EmployeeDTO>()

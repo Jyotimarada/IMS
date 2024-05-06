@@ -12,7 +12,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EmployeeComponent } from './employee/employee.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmployeeDevicesComponent } from './employee-devices/employee-devices.component'
+import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
 
 
 const routes: Routes = [
@@ -22,7 +24,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EmployeelistComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    EmployeeDevicesComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,12 @@ const routes: Routes = [
 
   ],
   exports: [RouterModule],
+  providers: [
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { dateFormat: "short" }
+    }
+  ]
 
 })
 export class EmployeeModule { }

@@ -36,10 +36,10 @@ namespace IMS.WebAPI.Controllers
         /// <param name="s">search string</param>
         /// <returns>Devices matching the search string</returns>
         [HttpGet]
-        public async Task<IEnumerable<DeviceDTO>> GetDevices([FromQuery] string? s,CancellationToken cancellationToken)
+        public async Task<IEnumerable<DeviceDTO>> GetDevices([FromQuery] string? s, [FromQuery] bool availableDevices, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Get Devices logs working");
-            return _deviceService.SearchByName(s, cancellationToken);
+            return _deviceService.SearchByName(s, availableDevices, cancellationToken);
         }
 
         /// <summary>

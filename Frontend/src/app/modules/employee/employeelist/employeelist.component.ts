@@ -5,6 +5,7 @@ import { EmployeeService } from '../../../shared/services/emplyee.service';
 import { Employee } from '../../../shared/models/employee';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeComponent } from '../employee/employee.component';
+import { EmployeeDevicesComponent } from '../employee-devices/employee-devices.component';
 
 @Component({
   selector: 'app-employeelist',
@@ -18,12 +19,17 @@ export class EmployeelistComponent {
   constructor(private service: EmployeeService, private modalRef: MatDialog){
     this.OnSearch();
   }
+
+
+  OpenEmployeeDevices(employee : Employee) {
+    const dialogRef = this.modalRef.open(EmployeeDevicesComponent, {
+     data: employee});
+  }
+
   OnSearch() {
-console.log(this.search);
 this.service.SearchByName(this.search).subscribe(data => {this.dataSource = new MatTableDataSource<Employee>(data);
   this.dataSource.paginator = this.paginator
 });
-console.log(this.employees);
 }
 OnClear() {
  this.search = '';

@@ -8,9 +8,9 @@ export class DeviceService
 {
   constructor(private http : HttpClient){}
 
-  public SearchByName(search: string) : Observable<Device[]>
+  public SearchByName(search: string , availableDevices:boolean) : Observable<Device[]>
   {
-     return this.http.get<Device[]>(`https://localhost:7167/api/devices?s=${ search }`, {observe: 'body', responseType: 'json'})
+     return this.http.get<Device[]>(`https://localhost:7167/api/devices?s=${ search }&availableDevices=${ availableDevices }`, {observe: 'body', responseType: 'json'})
     .pipe(
       catchError(error => {
         console.error('An error occurred:', error);

@@ -18,6 +18,13 @@ namespace IMS.Application.Services
         private readonly ILogger<DeviceService> _logger;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeviceService"/> class.
+        /// </summary>
+        /// <param name="logger">logger.</param>
+        /// <param name="repository">DeviceRepository.</param>
+        /// <param name="IUnitOfWork">UnitOfWork.</param>
+        /// <param name="mapper">mapper.</param>
         public DeviceService(ILogger<DeviceService> logger, IDeviceRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
@@ -26,22 +33,34 @@ namespace IMS.Application.Services
             _mapper = mapper;
         }
 
-        public List<DeviceDTO> SearchByName(string searchString, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Search device by name .
+        /// </summary>
+        public List<DeviceDTO> SearchByName(string searchString, bool availableDevices, CancellationToken cancellationToken = default)
         {
-            return _mapper.Map<List<DeviceDTO>>(_repository.SearchDeviceByName(searchString, cancellationToken));
+            return _mapper.Map<List<DeviceDTO>>(_repository.SearchDeviceByName(searchString, availableDevices, cancellationToken));
         }
 
+        /// <summary>
+        /// Get device by id.
+        /// </summary>
         public async Task<DeviceDTO> GetDevice(int id, CancellationToken cancellationToken = default)
         {
             return _mapper.Map<DeviceDTO>(await _repository.Get(id, cancellationToken));
         }
 
+        /// <summary>
+        /// Add device.
+        /// </summary>
         public async Task AddDevice(DeviceDTO device, CancellationToken cancellationToken)
         {
             await _repository.Create(_mapper.Map<Device>(device));
             await _unitOfWork.Save(cancellationToken);
         }
 
+        /// <summary>
+        /// Update device.
+        /// </summary>
         public async Task UpdateDevice(DeviceDTO employee, CancellationToken cancellationToken)
         {
             _repository.Update(_mapper.Map<Device>(employee));

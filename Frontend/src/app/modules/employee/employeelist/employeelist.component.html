@@ -53,7 +53,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="devices">
       <th mat-header-cell *matHeaderCellDef> Devices Assigned </th>
-      <td mat-cell *matCellDef="let element"> <a href="__target" src=""> {{element.devices}} </a> </td>
+      <td mat-cell *matCellDef="let element"> <a href="javascript:void(0)" (click)="OpenEmployeeDevices(element);"> {{element.devices}} </a> </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

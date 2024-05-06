@@ -6,3 +6,13 @@ export interface Employee {
   description:string;
   devices?: number;
 }
+
+export interface EmployeeDevice{
+  employeeId: number,
+  employeeName: string,
+  deviceId: number,
+  devicename: string,
+  assignedDate: Date,
+  returnDate: Date
+
+}

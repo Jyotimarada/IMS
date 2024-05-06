@@ -84,7 +84,7 @@ namespace IMS.WebAPI.Controllers
         /// Assign devices to employee
         /// </summary>
         /// <param name="id">Id of the employee</param>
-        /// <param name="devices">Devices to be assigned</param>
+        /// <param name="employeeDevies">Devices to be assigned</param>
         /// <returns>Status of the operation</returns>
         [HttpPost]
         [Route("{id:int}/assign-devices")]
@@ -99,7 +99,7 @@ namespace IMS.WebAPI.Controllers
         /// Get employee devices by employee id
         /// </summary>
         /// <param name="id">id of the employee</param>
-        /// <returns></returns>
+        /// <returns>List of employee with devices</returns>
         [HttpGet]
         [Route("{id:int}/devices")]
         public async Task<IEnumerable<EmployeeDeviceDTO>> GetEmployeeDevices([FromRoute] int id)

@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Device } from '../../../shared/models/device.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { DeviceService } from '../../../shared/services/device.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-device-list',
@@ -13,17 +14,20 @@ import { MatPaginator } from '@angular/material/paginator';
 export class DeviceListComponent {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+  @Input('AllowSelection') AllowSelection : boolean = false
+  @Output() Selected = new EventEmitter<Device[]>();
 
   constructor(private service: DeviceService, private modalRef: MatDialog) {
+  }
+
+  ngOnInit() {
     this.OnSearch();
   }
 
   OnSearch() {
-    console.log(this.search);
-    this.service.SearchByName(this.search).subscribe((data) => {
+    this.service.SearchByName(this.search,this.AllowSelection).subscribe((data) => {
       this.dataSource = new MatTableDataSource<Device>(data);
       this.dataSource.paginator = this.paginator
-      console.log(data);
     });
   }
 
@@ -33,6 +37,7 @@ export class DeviceListComponent {
   }
 
   displayedColumns: string[] = [
+    'select',
     'id',
     'name',
     'description',
@@ -42,4 +47,34 @@ export class DeviceListComponent {
   ];
   dataSource = new MatTableDataSource<Device>();
   search: string = '';
+  selection = new SelectionModel<Device>(true, []);
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Device): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+  SelectedDevices()
+  {
+    this.Selected.emit(this.selection.selected);
+  }
 }

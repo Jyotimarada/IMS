@@ -1,63 +1,96 @@
 <mat-toolbar class="tool-bar">
   <mat-toolbar-row>
     <button mat-icon-button matTooltip="Employee List" routerLink="../">
-      <mat-icon aria-label="Employee List"  matTooltip="Employee List">arrow_back</mat-icon>
+      <mat-icon aria-label="Employee List" matTooltip="Employee List"
+        >arrow_back</mat-icon
+      >
     </button>
-  <span>{{this.Title}}</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button matTooltip="Save Employee" type="submit" form="employeeform">
-    <mat-icon aria-label="Save Employee"  matTooltip="Save Employee">save</mat-icon>
-  </button>
-</mat-toolbar-row>
+    <span>{{ this.Title }}</span>
+    <span class="example-spacer"></span>
+    <button
+      mat-icon-button
+      matTooltip="Save Employee"
+      type="submit"
+      form="employeeform"
+    >
+      <mat-icon aria-label="Save Employee" matTooltip="Save Employee"
+        >save</mat-icon
+      >
+    </button>
+  </mat-toolbar-row>
 </mat-toolbar>
 <div class="form-group">
-<form [formGroup]="employeeForm" (ngSubmit)="submit();" id="employeeform" class="employee-form">
-  <mat-form-field >
-    <mat-label>Employee Id</mat-label>
-    <input matInput
-           placeholder="Id"
-           [formControl]="employeeForm.controls.id"
-           >
-  </mat-form-field>
-  <mat-form-field >
-    <mat-label>Enter your First Name</mat-label>
-    <input matInput
-           placeholder="First Name"
-           [formControl]="employeeForm.controls.firstName"
-           required>
-    @if (employeeForm.controls.firstName.invalid) {
+  <form
+    [formGroup]="employeeForm"
+    (ngSubmit)="submit()"
+    id="employeeform"
+    class="employee-form"
+  >
+    <mat-form-field>
+      <mat-label>Employee Id</mat-label>
+      <input
+        matInput
+        placeholder="Id"
+        [formControl]="employeeForm.controls.id"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter your First Name</mat-label>
+      <input
+        matInput
+        placeholder="First Name"
+        [formControl]="employeeForm.controls.firstName"
+        required
+      />
+      @if (employeeForm.controls.firstName.invalid) {
       <mat-error>Please enter a valid first name.</mat-error>
-    }
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Enter your Last Name</mat-label>
-    <input matInput
-           placeholder="lastName Name"
-           [formControl]="employeeForm.controls.lastName"
-           required>
-    @if (employeeForm.controls.lastName.invalid) {
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter your Last Name</mat-label>
+      <input
+        matInput
+        placeholder="lastName Name"
+        [formControl]="employeeForm.controls.lastName"
+        required
+      />
+      @if (employeeForm.controls.lastName.invalid) {
       <mat-error>Please enter a valid last name.</mat-error>
-    }
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Enter your email</mat-label>
-    <input matInput
-           placeholder="pat@example.com"
-           [formControl]="employeeForm.controls.email"
-           required>
-    @if (employeeForm.controls.email.invalid) {
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter your email</mat-label>
+      <input
+        matInput
+        placeholder="pat@example.com"
+        [formControl]="employeeForm.controls.email"
+        required
+      />
+      @if (employeeForm.controls.email.invalid) {
       <mat-error>Please enter a valid email id.</mat-error>
-    }
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Employee Description</mat-label>
-    <input matInput
-           placeholder="employee description"
-           [formControl]="employeeForm.controls.description">
-    @if (employeeForm.controls.email.invalid) {
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Employee Description</mat-label>
+      <input
+        matInput
+        placeholder="employee description"
+        [formControl]="employeeForm.controls.description"
+      />
+      @if (employeeForm.controls.email.invalid) {
       <mat-error>Please enter a valid email id.</mat-error>
-    }
-  </mat-form-field>
-
-</form>
+      }
+    </mat-form-field>
+  </form>
 </div>
+<mat-toolbar class="tool-bar">
+  <mat-toolbar-row>
+    <span>Assigned Devices</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button matTooltip="Assign Devices" (click)="OpenDeviceSelection();">
+      <mat-icon aria-label="Assign Devices" matTooltip="Assign Devices"
+        >link</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<app-employee-devices [showToolBar]="false" [employee]="this.getEmployeeData" *ngIf="isDataLoaded"></app-employee-devices>
