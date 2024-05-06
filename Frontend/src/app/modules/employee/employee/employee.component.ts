@@ -10,7 +10,7 @@ import {
   FormArray,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DeviceComponent } from '../../device/device/device.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeviceListComponent } from '../../device/device-list/device-list.component';
 import { Device } from '../../../shared/models/device.model';
 
@@ -40,15 +40,21 @@ export class EmployeeComponent {
     private route: ActivatedRoute,
     private service: EmployeeService,
     private formBuilder: FormBuilder,
-    private modalRef: MatDialog
+    private modalRef: MatDialog,
+    private _messageBar: MatSnackBar
   ) {
     this.id = parseInt(this.route.snapshot.paramMap.get('id') as string);
-    if (this.id > 0) this.SetTitle();
+    if (this.id > 0) this.GetEmployee();
+  }
+
+  openMessageBar(message: string, action: string) {
+    this._messageBar.open(message, action,{duration:2000, verticalPosition : 'top'});
   }
 
   SetTitle() {
-    this.GetEmployee();
+    this.Title = `${this.employeeForm.controls.lastName.value}, ${this.employeeForm.controls.firstName.value}`;
   }
+
 
   GetEmployee() {
     this.service.Get(this.id).subscribe((data) => {
@@ -56,7 +62,7 @@ export class EmployeeComponent {
       this.Title = `${this.employeeForm.controls.lastName.value}, ${this.employeeForm.controls.firstName.value}`;
       this.employee = <Employee>this.employeeForm.value;
       this.isDataLoaded = true;
-      console.log('isDataLoaded');
+      this.SetTitle();
     });
   }
   get getEmployeeData(): Employee {
@@ -69,8 +75,12 @@ export class EmployeeComponent {
     let emp = <Employee>this.employeeForm.value;
     emp.id = this.id;
     if (emp.id > 0)
-      this.service.Update(emp).subscribe((data) => console.log(data));
-    else this.service.Create(emp).subscribe((data) => console.log(data));
+    {
+      this.service.Update(emp).subscribe((data) => this.openMessageBar("Updated Successfully",""));
+      this.SetTitle();
+    }
+    else 
+    this.service.Create(emp).subscribe((data) => this.openMessageBar("Created Successfully",""));
   }
 
   OpenDeviceSelection() {

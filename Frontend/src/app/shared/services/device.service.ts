@@ -35,8 +35,6 @@ export class DeviceService
 
     const headers = { 'content-type': 'application/json'}
     const body=JSON.stringify(device);
-    console.log('inside save');
-    console.log(body)
     return this.http.patch(`https://localhost:7167/api/devices/${ device.id }`, body, {'headers': headers})
     .pipe(
       catchError(error => {
@@ -51,8 +49,6 @@ export class DeviceService
 
     const headers = { 'content-type': 'application/json'}
     const body=JSON.stringify(device);
-    console.log('inside save');
-    console.log(body)
     return this.http.post(`https://localhost:7167/api/devices`, body, {'headers': headers})
     .pipe(
       catchError(error => {

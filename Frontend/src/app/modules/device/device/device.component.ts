@@ -9,6 +9,7 @@ import {
   FormArray,
 } from '@angular/forms';
 import { Device } from '../../../shared/models/device.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-device',
@@ -36,11 +37,12 @@ export class DeviceComponent {
   constructor(
     private route: ActivatedRoute,
     private service: DeviceService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _messageBar: MatSnackBar
   ) {
     this.filteredOptions = this.options.slice();
     this.id = parseInt(this.route.snapshot.paramMap.get('id') as string);
-    if (this.id > 0) this.SetTitle();
+    if (this.id > 0) this.GetDevice();
   }
 
   filter(): void {
@@ -48,14 +50,18 @@ export class DeviceComponent {
     this.filteredOptions = this.options.filter(o => o.toLowerCase().includes(filterValue));
   }
 
+  openMessageBar(message: string, action: string) {
+    this._messageBar.open(message, action,{duration:2000, verticalPosition : 'top'});
+  }
+
   SetTitle() {
-    this.GetDevice();
+    this.Title = `${this.deviceForm.controls.name.value} - ${this.deviceForm.controls.barcode.value}`;
   }
 
   GetDevice() {
     this.service.Get(this.id).subscribe((data) => {
       this.deviceForm.patchValue(data);
-      this.Title = `${this.deviceForm.controls.name.value} - ${this.deviceForm.controls.barcode.value}`;
+      this.SetTitle();
     });
   }
 
@@ -63,9 +69,10 @@ export class DeviceComponent {
     let device = <Device>this.deviceForm.value;
     device.id = this.id;
     if(device.id > 0)
-      this.service.Update(device).subscribe((data) => console.log(data));
+      this.service.Update(device).subscribe((data) => this.openMessageBar("Updated Successfully",""));
     else
-      this.service.Create(device).subscribe((data) => console.log(data));
+      this.service.Create(device).subscribe((data) => this.openMessageBar("Created Successfully",""));
+    this.SetTitle();
     }
 }
 

@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeDevicesComponent } from './employee-devices/employee-devices.component'
 import { DATE_PIPE_DEFAULT_OPTIONS } from "@angular/common";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
     MatTooltipModule,
     MatDialogModule,
     MatToolbarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
 
   ],
   exports: [RouterModule],

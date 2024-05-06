@@ -28,11 +28,7 @@ displayedColumns: string[] = [ 'devicename', 'assignedDate'];
     });
   }
   ngOnInit() {
-    console.log(this.employee);
-    console.log(this.employeeData);
-
     this.employee = this.employee ?? this.employeeData;
-    console.log(this.employee.id);
       this.GetDevices(this.employee.id);
       this.Title = `${this.employee?.lastName}, ${this.employee?.firstName}`;
   }

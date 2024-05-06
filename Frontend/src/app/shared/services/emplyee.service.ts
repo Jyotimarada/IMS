@@ -17,7 +17,6 @@ export class EmployeeService
     const headers = { 'content-type': 'application/json'}
     const empDev = devices.map((device) => ({ deviceId: device.id, assignedDate: new Date().toISOString()}))
     const body=JSON.stringify(empDev);
-    console.log(empDev);
     return this.http.post(`https://localhost:7167/api/employees/${id}/assign-devices`, body, {'headers': headers})
     .pipe(
       catchError(error => {
@@ -68,8 +67,6 @@ export class EmployeeService
 
     const headers = { 'content-type': 'application/json'}
     const body=JSON.stringify(employee);
-    console.log('inside save');
-    console.log(body)
     return this.http.patch(`https://localhost:7167/api/employees/${ employee.id }`, body, {'headers': headers})
     .pipe(
       catchError(error => {
@@ -84,8 +81,6 @@ export class EmployeeService
 
     const headers = { 'content-type': 'application/json'}
     const body=JSON.stringify(employee);
-    console.log('inside save');
-    console.log(body)
     return this.http.post(`https://localhost:7167/api/employees`, body, {'headers': headers})
     .pipe(
       catchError(error => {
