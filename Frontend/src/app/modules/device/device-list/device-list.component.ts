@@ -21,6 +21,7 @@ export class DeviceListComponent {
   }
 
   ngOnInit() {
+    this.SetColumns();
     this.OnSearch();
   }
 
@@ -36,6 +37,7 @@ export class DeviceListComponent {
     this.OnSearch();
   }
 
+
   displayedColumns: string[] = [
     'select',
     'id',
@@ -48,6 +50,19 @@ export class DeviceListComponent {
   dataSource = new MatTableDataSource<Device>();
   search: string = '';
   selection = new SelectionModel<Device>(true, []);
+
+  SetColumns()
+  {
+    if(!this.AllowSelection)
+      this.displayedColumns =  [
+        'id',
+        'name',
+        'description',
+        'type',
+        'shared',
+        'barcode',
+      ];
+  }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;

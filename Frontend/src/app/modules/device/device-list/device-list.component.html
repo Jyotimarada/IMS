@@ -31,7 +31,7 @@
   <table mat-table [dataSource]="dataSource">
 
      <!-- Position Column -->
-     <ng-container matColumnDef="select">
+     <ng-container matColumnDef="select" *ngIf="AllowSelection">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? toggleAllRows() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
