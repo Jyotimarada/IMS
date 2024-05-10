@@ -6,6 +6,10 @@ import { Employee } from '../../../shared/models/employee';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeComponent } from '../employee/employee.component';
 import { EmployeeDevicesComponent } from '../employee-devices/employee-devices.component';
+import { Store } from '@ngrx/store';
+import {searchEmployee, selectEmployeeSearch } from '../../../state/employee'
+import { Observable } from 'rxjs';
+import { selectEmployee,selectEmployeeDevices,selectEmployees} from '../../../state/employee';
 
 @Component({
   selector: 'app-employeelist',
@@ -15,9 +19,20 @@ import { EmployeeDevicesComponent } from '../employee-devices/employee-devices.c
 export class EmployeelistComponent {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+  employees$!: Observable<Employee[]>;
+  searchString$!: Observable<string>;
 
-  constructor(private service: EmployeeService, private modalRef: MatDialog){
-    this.OnSearch();
+  constructor(private service: EmployeeService, private modalRef: MatDialog,private store: Store){
+    this.employees$ = store.select(selectEmployees);
+    this.searchString$ = store.select(selectEmployeeSearch)
+    this.employees$.subscribe((data) => {
+      console.log(data);
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+    }
+    );
+
+    this.searchString$.subscribe((search) => this.search = search);
   }
 
 
@@ -27,10 +42,8 @@ export class EmployeelistComponent {
   }
 
   OnSearch() {
-this.service.SearchByName(this.search).subscribe(data => {this.dataSource = new MatTableDataSource<Employee>(data);
-  this.dataSource.paginator = this.paginator
-});
-}
+    this.store.dispatch(searchEmployee({employeeName: this.search}));
+  }
 OnClear() {
  this.search = '';
   this.OnSearch();

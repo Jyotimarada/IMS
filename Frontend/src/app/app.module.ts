@@ -15,6 +15,12 @@ import { RouterModule } from '@angular/router';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+import { StoreModule } from "@ngrx/store";
+import { reducers, metaReducers } from "./state";
+import { EffectsModule } from '@ngrx/effects';
+
+import { EmloyeeEffects}  from './state/employee'
+
 
 
 @NgModule({
@@ -31,7 +37,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     CommonModule,
     EmployeeModule,
-    HttpClientModule
+    HttpClientModule,StoreModule.forRoot(reducers, {metaReducers}),
+    EffectsModule.forRoot([EmloyeeEffects])
   ],
   providers: [
     provideAnimationsAsync()
